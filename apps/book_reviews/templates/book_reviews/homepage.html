@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Belt Review Home</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome, {{ request.session.alias }}</h1>
+        <a href="/books/add">Add Book and Review</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="recentreviews">
+        <h3>Recent Book reviews:</h3>
+        {% for review in reviews %}
+            <p><a href="/books/{{ review.book.id }}">{{ review.book.title }}</a></p>
+            <p>Rating: {{ review.rating }} stars</p>
+            <p><a href="/users/{{ review.user.id }}">{{ review.user.name }}</a> says: {{ review.desc }}</p>
+            <p>Posted on: {{ review.created_at }}</p>
+        {% endfor %}
+    </div>
+    <div class="otherreviews">
+        <h3>Other Books with Reviews</h3>
+        {% for book in books %}
+            <p><a href="/books/{{ book.id }}">{{ book.title }}</a></p>
+        {% endfor %}
+    </div>
+</body>
+</html>

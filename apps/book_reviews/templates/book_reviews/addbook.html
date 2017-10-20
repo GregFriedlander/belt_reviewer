@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Book and Review</title>
+</head>
+<body>
+    <div class="addheader">
+        <a href="/books">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="addreview">
+        <h3>Add a New Book Title and a Review:</h3>
+        <form action="/processreview" method="POST">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>Book Title:</td>
+                    <td><input type="text" name="book_title"></td>
+                </tr>
+                <tr>
+                    <td>Author:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Choose from the list:</td>
+                    <td>
+                        <select name="author_list">
+                            {% for author in authors %}
+                            <option value="{{ author.name }}">{{author.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Or add a new author:</td>
+                    <td><input type="text" name="author_name"></td>
+                </tr>
+                <tr>
+                    <td>Reveiw:</td>
+                    <td><textarea name="review"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Rating</td>
+                    <td>
+                        <select name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        stars
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Add Book and Review">
+        </form>
+    </div>
+</body>
+</html>

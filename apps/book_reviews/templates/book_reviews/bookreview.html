@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Book Review</title>
+</head>
+<body>
+    <div class="bookreviewheader">
+        <a href="/books">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div>
+    <h1>{{books.title}}</h1>
+    <h4>Author: {{ books.author.name }}</h4>
+    <h3>Reviews:</h3>
+    {% for review in reviews %}
+        <p>Rating: {{ review.rating }} stars</p>
+        <p><a href="/users/{{ review.user.id }}">{{ review.user.name }}</a> says: {{ review.desc }}</p>
+        <p>Posted on {{ review.created_at }}</p>
+        {% if review.user.id == request.session.id %}
+            <form action="/delete/{{ books.id }}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{ review.id }}" name="review_id">
+                <input type="submit" value="Delete My Post">
+            </form>
+        {% endif %}
+    {% endfor %}
+    </div>  
+    <div class="addreviewform">
+        <form action="/addreview/{{ books.id }}" method="POST">
+            {% csrf_token %}
+        <table>
+            <tr>
+                <td>Add a Review:</td>
+                <td><textarea name="add_review"></textarea></td>
+            </tr>
+            <tr>
+                <td>Rating</td>
+                <td>
+                    <select name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    stars
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Add Review">
+        </form>
+    </div>
+</body>
+</html>
